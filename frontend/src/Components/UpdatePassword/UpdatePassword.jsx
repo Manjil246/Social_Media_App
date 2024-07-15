@@ -31,7 +31,7 @@ const UpdatePassword = () => {
         toast(message)
         dispatch(ClearMessage())
     }
-  }, [error,message,toast,dispatch])
+  }, [error,message,dispatch])
   
 
   return (

@@ -82,7 +82,7 @@ const UserProfile = () => {
       toast.success(message);
       dispatch(ClearMessage());
     }
-  }, [dispatch, toast, message, followError, userError, myPostError]);
+  }, [dispatch,message, followError, userError, myPostError]);
 
   return (
     <div className="account">

@@ -51,7 +51,7 @@ const Home = () => {
             toast.error(userError);
             dispatch(UserClearErrors());
         }
-    }, [dispatch,toast,message,likeError,postError,userError])
+    }, [dispatch,message,likeError,postError,userError])
 
     
     

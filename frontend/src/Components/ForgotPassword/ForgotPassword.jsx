@@ -26,7 +26,7 @@ const ForgotPassword = () => {
       toast(message);
       dispatch(ClearMessage())
     }
-  }, [error,toast,dispatch,message])
+  }, [error,dispatch,message])
   
 
   return (

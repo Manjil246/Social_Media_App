@@ -44,7 +44,7 @@ const NewPost = () => {
       toast.error(error);
       dispatch(ClearErrors())
     }
-  }, [error,message,toast,dispatch])
+  }, [error,message,dispatch])
   
 
   return (

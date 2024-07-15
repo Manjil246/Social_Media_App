@@ -40,7 +40,7 @@ const Register = () => {
         dispatch(UserClearErrors())
       }
       
-    }, [toast,error,dispatch])
+    }, [error,dispatch])
     
 
 
