@@ -46,7 +46,6 @@ const UserProfile = () => {
   }, [loginUser.following, params.id, loginUser._id]);
 
   const {
-    loading,
     error: myPostError,
     posts,
   } = useSelector((state) => state.userPosts);

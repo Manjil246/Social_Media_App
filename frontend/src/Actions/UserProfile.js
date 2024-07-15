@@ -11,7 +11,7 @@ export const getUserProfile = (id)=> async (dispatch)=>{
 
         dispatch(UserProfileRequest());
 
-        const {data} = await axios.get(`/user/getuserprofile/${id}`);
+        const {data} = await axios.get(`https://social-media-app-backend-xp9n.onrender.com/user/getuserprofile/${id}`);
 
         dispatch(UserProfileSuccess(data.user))
 

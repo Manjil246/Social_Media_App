@@ -11,7 +11,7 @@ export const getMyPosts = ()=> async (dispatch)=>{
 
         dispatch(MyPostsRequest());
 
-        const {data} = await axios.get("/post/my/posts");
+        const {data} = await axios.get("https://social-media-app-backend-xp9n.onrender.com/post/my/posts");
 
         dispatch(MyPostsSuccess(data.posts))
 

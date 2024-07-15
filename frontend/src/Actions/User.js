@@ -27,7 +27,7 @@ export const loginUser =  (email,password)=>
             dispatch(LoginRequest())
 
             const {data} = await axios.post(
-                "/user/login",
+                "https://social-media-app-backend-xp9n.onrender.com/user/login",
                 {email,password},
                 {
                     headers:{
@@ -46,7 +46,7 @@ export const loadUser = ()=>async (dispatch)=>{
     try { 
         dispatch(LoadUserRequest())
 
-        const {data} = await axios.get("/user/myprofile");
+        const {data} = await axios.get("https://social-media-app-backend-xp9n.onrender.com/user/myprofile");
 
         dispatch(LoadUserSuccess(data.user))
         
@@ -61,7 +61,7 @@ export const logoutUser =  ()=>
         try {
             dispatch(LogoutUserRequest())
 
-            const {data} = await axios.get("/user/logout")
+            const {data} = await axios.get("https://social-media-app-backend-xp9n.onrender.com/user/logout")
 
             dispatch(LogoutUserSuccess(data.message))
         } catch (error) {   
@@ -74,7 +74,7 @@ export const registerUser = (name,email,password,avatar)=>async (dispatch)=>{
     try {
         dispatch(RegisterRequest());
 
-        const {data} = await axios.post(`/user/createuser`,
+        const {data} = await axios.post(`https://social-media-app-backend-xp9n.onrender.com/user/createuser`,
             {name,email,password,avatar},
             {
                 headers:{
@@ -96,7 +96,7 @@ export const updateUser = (name,email,avatar)=>async (dispatch)=>{
     try {
         dispatch(UpdateUserRequest());
 
-        const {data} = await axios.put(`/user/updateprofile`,
+        const {data} = await axios.put(`https://social-media-app-backend-xp9n.onrender.com/user/updateprofile`,
             {name,email,avatar},
             {
                 headers:{
@@ -118,7 +118,7 @@ export const deleteMyProfile = ()=>async (dispatch)=>{
     try {
         dispatch(DeleteProfileRequest());
 
-        const {data} = await axios.delete(`/user/deleteuser`)
+        const {data} = await axios.delete(`https://social-media-app-backend-xp9n.onrender.com/user/deleteuser`)
         
         dispatch(DeleteProfileSuccess(data.message))  
         
