@@ -40,4 +40,7 @@ app.listen(port,()=>{
     console.log(`Social media app running at http://localhost:${port}`)
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 337a834736d46e3b0b95751ce9c5400340fc89cc
