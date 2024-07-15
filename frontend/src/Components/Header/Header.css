@@ -1,0 +1,42 @@
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header>a{
+    width: 2vmax;
+    height: 2vmax;
+    margin: 1vmax 2vmax;
+}
+.header > a >svg{
+    font-size: 2vmax;
+    transition: all 0.2s;
+    color: rgba(0, 0, 0, 0.445);
+}
+.header > a >svg:hover{
+    transform: scale(1.2);
+    color: black;
+}
+
+@media screen and (max-width:900px) {
+    .header>a{
+        height: 6vw;
+        width: 6vw;
+        margin: 3vw 6vw;
+    }
+    .header > a > svg{
+        font-size: 6vw ;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .header>a{
+        height: 8vw;
+        width: 8vw;
+        margin: 4vw 8vw;
+    }
+    .header > a > svg{
+        font-size: 8vw ;
+    }
+}
