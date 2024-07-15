@@ -21,6 +21,9 @@
     "web-vitals": "^2.1.4",
     "react-toastify": "^10.0.5"
   },
+  "overrides": {
+    "@svgr/webpack": "$@svgr/webpack"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
