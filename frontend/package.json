@@ -19,7 +19,8 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "@svgr/webpack": "^8.0.1",
   },
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
