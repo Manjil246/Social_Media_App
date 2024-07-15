@@ -10,7 +10,7 @@ import cloudinary from "cloudinary"
 
 
 
-var cors = require(cors());
+import cors from "cors"
 app.use(cors());
 app.options('*',cors());
 var allowCrossDomain = function(req,res,next) {
