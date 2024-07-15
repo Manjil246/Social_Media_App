@@ -40,23 +40,3 @@ app.listen(port,()=>{
     console.log(`Social media app running at http://localhost:${port}`)
 })
 
-
-
-
-
-
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-
-// Determine the directory name
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Serve static files from the frontend build directory
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-// Catch-all handler for all other requests
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/build/index.html'));
-});
