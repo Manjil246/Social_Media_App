@@ -2,8 +2,8 @@ import { Avatar, Button, Typography } from "@mui/material"
 import "./UpdateProfile.css"
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {useAlert} from "react-alert"
 import { UserClearErrors, ClearMessages } from "../../Reducers/User";
+import { ToastContainer, toast } from 'react-toastify'
 import { updateUser } from "../../Actions/User";
 
 const UpdateProfile = () => {
@@ -18,7 +18,6 @@ const UpdateProfile = () => {
 
 
     const dispatch = useDispatch()
-    const alert = useAlert()
 
     const handleAvatarChange = (e) => {
       const file = e.target.files[0];
@@ -40,14 +39,14 @@ const UpdateProfile = () => {
 
     useEffect(() => {
       if(error){
-        alert.error(error)
+        toast.error(error)
         dispatch(UserClearErrors())
       }
       if(message){
-        alert.success(message)
+        toast(message)
         dispatch(ClearMessages())
       }
-    }, [alert,error,dispatch,message])
+    }, [error,dispatch,message])
     
 
 
@@ -68,6 +67,7 @@ const UpdateProfile = () => {
         <Button disabled = {loading} type="submit">Update</Button>
         
       </form>
+      <ToastContainer/>
     </div>
   )
 }

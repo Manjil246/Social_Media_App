@@ -3,7 +3,6 @@ import "./Account.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyPosts } from "../../Actions/MyPosts";
 import Loader from "../Loader/Loader";
-import { useAlert } from "react-alert";
 import { Avatar, Button, Dialog, Typography } from "@mui/material";
 import Post from "../Post/Post";
 import { ClearErrors, ClearMessage } from "../../Reducers/Like";
@@ -11,15 +10,15 @@ import { MyPostsClearErrors } from "../../Reducers/MyPosts";
 import { Link } from "react-router-dom";
 import User from "../User/User";
 import { deleteMyProfile, logoutUser } from "../../Actions/User";
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const Account = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
-  const [followersToggle, setFollowersToggle] = useState(false)
-  const [followingToggle, setFollowingToggle] = useState(false)
+  const [followersToggle, setFollowersToggle] = useState(false);
+  const [followingToggle, setFollowingToggle] = useState(false);
 
   const {
-    loading,
     error: myPostError,
     posts,
   } = useSelector((state) => state.myPosts);
@@ -30,40 +29,40 @@ const Account = () => {
     loading: deleteLoading,
   } = useSelector((state) => state.like);
 
-  const { loading: userLoading, user} = useSelector((state) => state.user);
+  const { loading: userLoading, user } = useSelector((state) => state.user);
 
-  const logoutHandler = async ()=>{
-    dispatch(logoutUser())
-    alert.success("Logout Successfully");
-  }
+  const logoutHandler = async () => {
+    dispatch(logoutUser());
+    toast("Logout Successfully!");
+  };
 
-  const deleteProfileHandler = ()=>{
+  const deleteProfileHandler = () => {
     dispatch(deleteMyProfile());
-  }
+  };
 
   useEffect(() => {
     dispatch(getMyPosts());
-  }, [dispatch])
-  
+  }, [dispatch]);
 
   useEffect(() => {
     if (likeError) {
-      alert.error(likeError);
+      toast.error(likeError);
       dispatch(ClearErrors());
     }
     if (myPostError) {
-      alert.error(myPostError);
+      toast.error(myPostError);
       dispatch(MyPostsClearErrors());
     }
     if (message) {
-      alert.success(message);
+      toast(message);
       dispatch(ClearMessage());
     }
-  }, [dispatch, alert, message, likeError, myPostError]);
+  }, [dispatch, message, likeError, myPostError]);
 
-  return loading || userLoading ? (
+  return userLoading ? (
     <Loader />
-  ) : (
+  ) : 
+  (
     <div className="account">
       <div className="accountleft">
         {posts && posts.length > 0 ? (
@@ -96,13 +95,13 @@ const Account = () => {
         />
         <Typography variant="h5">{user.name}</Typography>
         <div>
-          <button onClick={() => {setFollowersToggle(!followersToggle);}}>
+          <button onClick={() => { setFollowersToggle(!followersToggle); }}>
             <Typography>Followers</Typography>
           </button>
           <Typography>{user.followers.length}</Typography>
         </div>
         <div>
-          <button onClick={() => {setFollowingToggle(!followingToggle)}}>
+          <button onClick={() => { setFollowingToggle(!followingToggle) }}>
             <Typography>Following</Typography>
           </button>
           <Typography>{user.following.length}</Typography>
@@ -119,9 +118,6 @@ const Account = () => {
           Delete Profile
         </Button>
 
-
-
-
         <Dialog
           open={followersToggle}
           onClose={() => {
@@ -130,7 +126,7 @@ const Account = () => {
         >
           <div className="DialogBox">
             <Typography variant="h4">Followers</Typography>
-            {user && user.followers.length>0?user.followers.map((follower) => {
+            {user && user.followers.length > 0 ? user.followers.map((follower) => {
               return (
                 <User
                   key={follower._id}
@@ -139,11 +135,9 @@ const Account = () => {
                   avatar={follower.avatar.url}
                 />
               );
-            }):<Typography style={{margin:"2vmax"}}>No Followers Yet</Typography>}
+            }) : <Typography style={{ margin: "2vmax" }}>No Followers Yet</Typography>}
           </div>
         </Dialog>
-
-
 
         <Dialog
           open={followingToggle}
@@ -153,7 +147,7 @@ const Account = () => {
         >
           <div className="DialogBox">
             <Typography variant="h4">Following</Typography>
-            {user && user.following.length>0?user.following.map((follow) => {
+            {user && user.following.length > 0 ? user.following.map((follow) => {
               return (
                 <User
                   key={follow._id}
@@ -162,14 +156,12 @@ const Account = () => {
                   avatar={follow.avatar.url}
                 />
               );
-            }):<Typography style={{margin:"2vmax"}}>You haven't followed anyone yet.</Typography>}
+            }) : <Typography style={{ margin: "2vmax" }}>You haven't followed anyone yet.</Typography>}
           </div>
         </Dialog>
 
-
-
-
       </div>
+      <ToastContainer />
     </div>
   );
 };

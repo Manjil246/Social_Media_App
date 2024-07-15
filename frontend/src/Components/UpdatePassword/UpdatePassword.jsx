@@ -3,7 +3,7 @@ import { Typography, Button } from "@mui/material"
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import {updatePasswordUser} from "../../Actions/Like"
-import {useAlert} from "react-alert"
+import { ToastContainer, toast } from 'react-toastify'
 import { ClearMessage, ClearErrors } from "../../Reducers/Like"
 import Loader from "../Loader/Loader"
 
@@ -16,7 +16,6 @@ const UpdatePassword = () => {
   const dispatch = useDispatch()
   const {loading:userLoading} = useSelector(state=>state.user)
   const {message,error,loading:likeLoading} = useSelector(state=>state.like)
-  const alert = useAlert()
 
   const updatePasswordHandler= async (e) => {
     e.preventDefault();
@@ -25,14 +24,14 @@ const UpdatePassword = () => {
 
   useEffect(() => {
     if(error){
-        alert.error(error);
+        toast.error(error);
         dispatch(ClearErrors())
     }
     if(message){
-        alert.success(message)
+        toast(message)
         dispatch(ClearMessage())
     }
-  }, [error,message,alert,dispatch])
+  }, [error,message,toast,dispatch])
   
 
   return (
@@ -48,6 +47,7 @@ const UpdatePassword = () => {
         <Button disabled={likeLoading} type="submit">Update Password</Button>
         
       </form>
+      <ToastContainer/>
 
     </div>
   )

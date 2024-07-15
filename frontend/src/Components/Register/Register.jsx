@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from "../../Actions/User";
-import {useAlert} from "react-alert"
+import { ToastContainer, toast } from 'react-toastify'
 import { UserClearErrors} from "../../Reducers/User";
 
 const Register = () => {
@@ -15,7 +15,7 @@ const Register = () => {
     const [avatar, setAvatar] = useState(null)
     const dispatch = useDispatch()
     const {loading,error} = useSelector(state=>state.user)
-    const alert = useAlert()
+    
 
     const handleAvatarChange = (e) => {
       const file = e.target.files[0];
@@ -36,11 +36,11 @@ const Register = () => {
 
     useEffect(() => {
       if(error){
-        alert.error(error)
+        toast.error(error)
         dispatch(UserClearErrors())
       }
       
-    }, [alert,error,dispatch])
+    }, [toast,error,dispatch])
     
 
 
@@ -66,6 +66,7 @@ const Register = () => {
         <Button disabled = {loading} type="submit">Sign Up</Button>
         
       </form>
+      <ToastContainer/>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import {loginUser} from "../../Actions/User"
-import {useAlert} from "react-alert"
+import { ToastContainer, toast } from 'react-toastify'
 import {ClearMessages, UserClearErrors } from "../../Reducers/User"
 
 const Login = () => {
@@ -13,7 +13,6 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const dispatch = useDispatch()
   const {error,message} = useSelector(state=>state.user)
-  const alert = useAlert()
 
   const loginHandler= async(e)=>{
     e.preventDefault();
@@ -22,14 +21,14 @@ const Login = () => {
 
   useEffect(() => {
     if(error){
-        alert.error(error);
+        toast.error(error);
         dispatch(UserClearErrors())
     }
     if(message){
-      alert.success(message);
+      toast(message);
       dispatch(ClearMessages())
     }
-  }, [error,alert,dispatch,message])
+  }, [error,toast,dispatch,message])
   
 
   return (
@@ -46,6 +45,7 @@ const Login = () => {
           <Typography>New User? Register</Typography>
         </Link>
       </form>
+      <ToastContainer/>
 
     </div>
   )

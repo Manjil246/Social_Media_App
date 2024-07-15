@@ -70,7 +70,7 @@ export const deleteCommentOnPost = (postId, commentId)=>async (dispatch)=>{
 
         const {data} = await axios.delete(`/post/deletecomment/${postId}`,
             {
-                data:commentId
+                data:{commentId}
             }
         ); 
         

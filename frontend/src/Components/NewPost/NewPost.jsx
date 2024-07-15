@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import {useSelector,useDispatch} from "react-redux"
 import { createNewPost } from "../../Actions/Like";
-import { useAlert } from 'react-alert'
+import { ToastContainer, toast } from 'react-toastify'
 import { ClearErrors, ClearMessage } from "../../Reducers/Like";
 import { loadUser } from "../../Actions/User";
 
@@ -12,7 +12,6 @@ import { loadUser } from "../../Actions/User";
 const NewPost = () => {
   const [image, setImage] = useState(null);
   const [caption, setCaption] = useState("");
-  const alert = useAlert()
   
   const {loading,error,message} = useSelector(state=>state.like)
   const dispatch = useDispatch();
@@ -38,14 +37,14 @@ const NewPost = () => {
 
   useEffect(() => {
     if(message){
-      alert.success(message);
+      toast(message);
       dispatch(ClearMessage())
     }
     if(error){
-      alert.error(error);
+      toast.error(error);
       dispatch(ClearErrors())
     }
-  }, [error,message,alert,dispatch])
+  }, [error,message,toast,dispatch])
   
 
   return (
@@ -62,6 +61,7 @@ const NewPost = () => {
         />
         <Button disabled={loading} type="submit">Post</Button>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

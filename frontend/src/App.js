@@ -16,6 +16,8 @@ import ResetPassword from './Components/ResetPassword/ResetPassword';
 import UserProfile from './Components/UserProfile/UserProfile';
 import Search from './Components/Search/Search';
 import NotFound from './Components/NotFound/NotFound';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() {

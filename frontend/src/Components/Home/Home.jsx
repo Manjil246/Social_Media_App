@@ -7,17 +7,14 @@ import {getFollowingPosts} from "../../Actions/PostsFollowing"
 import {getAllUsers} from "../../Actions/AllUsers"
 import Loader from '../Loader/Loader'
 import { Typography } from '@mui/material'
-import { useAlert } from 'react-alert'
+import { ToastContainer, toast } from 'react-toastify'
 import { ClearMessage,ClearErrors } from '../../Reducers/Like'
 import { PostClearErrors} from '../../Reducers/PostsFollowing'
 import { loadUser } from '../../Actions/User'
 import { UserClearErrors } from '../../Reducers/User'
 
 
-
 const Home = () => {
-
-    const alert = useAlert()
 
     const {error:likeError, message} = useSelector(state=>state.like);
     const {users,loading:usersLoading,error:userError} = useSelector(state=>state.allUsers)
@@ -39,29 +36,29 @@ const Home = () => {
         dispatch(getFollowingPosts())
         dispatch(getAllUsers())
         if(likeError){
-            alert.error(likeError);
+            toast.error(likeError);
             dispatch(ClearErrors());
         }
         if(postError){
-            alert.error(postError);
+            toast.error(postError);
             dispatch(PostClearErrors());
         }
         if(message){
-            alert.success(message);
+            toast(message);
             dispatch(ClearMessage());
         }
         if(userError){
-            alert.error(userError);
+            toast.error(userError);
             dispatch(UserClearErrors());
         }
-    }, [dispatch,alert,message,likeError,postError,userError])
+    }, [dispatch,toast,message,likeError,postError,userError])
 
     
     
 
-  return (
-    loading===true || usersLoading===true?<Loader/>:
-    (<div className="home">
+  return (<div className="home">
+
+        {usersLoading===true?<Loader/>:
         <div className="homeleft">
             {posts && posts.length>0?posts.map((post)=>(
                 <Post 
@@ -81,7 +78,9 @@ const Home = () => {
             }
             
         </div>
-        <div className="homeright">
+
+}
+        {loading===true?<Loader/>:<div className="homeright">
             {users && users.length>0?users.map((user)=>(
                 <User 
                 key={user._id}
@@ -91,10 +90,9 @@ const Home = () => {
             >
             </User>
             )):<Typography variant='h6'>No Users Yet</Typography>}
-        </div>   
+        </div> }  
+        <ToastContainer/>
     </div>)
-
-  )
 }
 
 export default Home

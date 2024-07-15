@@ -2,16 +2,15 @@ import "./ForgotPassword.css"
 import { Typography, Button } from "@mui/material"
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import {useAlert} from "react-alert"
 import { forgotPassword } from "../../Actions/Like"
 import { ClearErrors, ClearMessage } from "../../Reducers/Like"
+import { ToastContainer, toast } from 'react-toastify'
 
 const ForgotPassword = () => {
 
   const [email, setEmail] = useState("");
   const dispatch = useDispatch()
   const {error,message,loading} = useSelector(state=>state.like)
-  const alert = useAlert()
 
   const submitHandler= async(e)=>{
     e.preventDefault();
@@ -20,14 +19,14 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if(error){
-        alert.error(error);
+        toast.error(error);
         dispatch(ClearErrors())
     }
     if(message){
-      alert.success(message);
+      toast(message);
       dispatch(ClearMessage())
     }
-  }, [error,alert,dispatch,message])
+  }, [error,toast,dispatch,message])
   
 
   return (
@@ -41,6 +40,7 @@ const ForgotPassword = () => {
         <Button disabled={loading} type="submit">Send Token</Button>
  
       </form>
+      <ToastContainer/>
 
     </div>
   )

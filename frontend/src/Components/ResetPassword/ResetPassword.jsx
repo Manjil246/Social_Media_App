@@ -2,7 +2,7 @@ import "./ResetPassword.css"
 import { Typography, Button } from "@mui/material"
 import React,{useEffect, useState} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import {useAlert} from "react-alert"
+import { ToastContainer, toast } from 'react-toastify'
 import {ClearMessage, ClearErrors } from "../../Reducers/Like"
 import { resetPassword } from "../../Actions/Like"
 import { Link, useParams } from "react-router-dom"
@@ -12,7 +12,6 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("")
   const dispatch = useDispatch()
   const {error,message,loading} = useSelector(state=>state.like)
-  const alert = useAlert()
   const params = useParams()
 
   const resetPasswordHandler= async(e)=>{
@@ -22,14 +21,14 @@ const ResetPassword = () => {
 
   useEffect(() => {
     if(error){
-        alert.error(error);
+        toast.error(error);
         dispatch(ClearErrors())
     }
     if(message){
-      alert.success(message);
+      toast(message);
       dispatch(ClearMessage())
     }
-  }, [error,alert,dispatch,message])
+  }, [error,toast,dispatch,message])
   
 
   return (
@@ -51,6 +50,7 @@ const ResetPassword = () => {
         </Link>
 
       </form>
+      <ToastContainer/>
 
     </div>
   )

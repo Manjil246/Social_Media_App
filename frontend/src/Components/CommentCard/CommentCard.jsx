@@ -24,6 +24,7 @@ const CommentCard = ({
   const dispatch = useDispatch();
 
   const deleteCommentHandler = async () => {
+    console.log(postId, commentId)
     await dispatch(deleteCommentOnPost(postId, commentId));
     if(userProfile===""){
       if(isAccount===false){

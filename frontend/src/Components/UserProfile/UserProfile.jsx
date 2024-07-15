@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPosts } from "../../Actions/UserPosts";
-import {getUserProfile} from "../../Actions/UserProfile"
+import { getUserProfile } from "../../Actions/UserProfile";
 import Loader from "../Loader/Loader";
-import { useAlert } from "react-alert";
+import { ToastContainer, toast } from "react-toastify";
 import { Avatar, Button, Dialog, Typography } from "@mui/material";
 import Post from "../Post/Post";
 import { ClearErrors, ClearMessage } from "../../Reducers/Like";
@@ -12,41 +11,39 @@ import { MyPostsClearErrors } from "../../Reducers/MyPosts";
 import { useParams } from "react-router-dom";
 import User from "../User/User";
 import { followUnfollowUser } from "../../Actions/Like";
-import { UserProfileClearError} from "../../Reducers/UserProfile";
+import { UserProfileClearError } from "../../Reducers/UserProfile";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
-  const params = useParams()
-  const [followersToggle, setFollowersToggle] = useState(false)
-  const [followingToggle, setFollowingToggle] = useState(false)
-  const [following, setFollowing] = useState(false)
+  const params = useParams();
+  const [followersToggle, setFollowersToggle] = useState(false);
+  const [followingToggle, setFollowingToggle] = useState(false);
+  const [following, setFollowing] = useState(false);
 
+  const { user: loginUser } = useSelector((state) => state.user);
 
-
-  const { user:loginUser } = useSelector(state => state.user )
-
-
-
-  const { loading:userLoading,user,error:userError} = useSelector((state) => state.userProfile);
-
-  useEffect(() => {
-    dispatch(getUserPosts(params.id))
-    dispatch(getUserProfile(params.id))
-  }, [dispatch,params.id])
+  const {
+    loading: userLoading,
+    user,
+    error: userError,
+  } = useSelector((state) => state.userProfile);
 
   useEffect(() => {
-    if(loginUser._id === params.id){
-      setMyProfile(true)
+    dispatch(getUserPosts(params.id));
+    dispatch(getUserProfile(params.id));
+  }, [dispatch, params.id]);
+
+  useEffect(() => {
+    if (loginUser._id === params.id) {
+      setMyProfile(true);
     }
-    for(let i = 0;i<loginUser.following.length;i++){
-      if(loginUser.following[i]._id===params.id){
+    for (let i = 0; i < loginUser.following.length; i++) {
+      if (loginUser.following[i]._id === params.id) {
         setFollowing(true);
         break;
       }
     }
-  }, [loginUser.following,params.id,loginUser._id])
-  
+  }, [loginUser.following, params.id, loginUser._id]);
 
   const {
     loading,
@@ -60,47 +57,34 @@ const UserProfile = () => {
     loading: followLoading,
   } = useSelector((state) => state.like);
 
-  
+  const [myProfile, setMyProfile] = useState(false);
 
-  
-
-  const [myProfile, setMyProfile] = useState(false)
-
-  const followHandler = async ()=>{
+  const followHandler = async () => {
     setFollowing(!following);
     await dispatch(followUnfollowUser(params.id));
-    dispatch(getUserProfile(params.id))
-  }
-
-
-  
+    await dispatch(getUserProfile(params.id));
+  };
 
   useEffect(() => {
     if (followError) {
-      alert.error(followError);
+      toast.error(followError);
       dispatch(ClearErrors());
     }
     if (userError) {
-      alert.error(userError);
+      toast.error(userError);
       dispatch(UserProfileClearError());
     }
     if (myPostError) {
-      alert.error(myPostError);
+      toast.error(myPostError);
       dispatch(MyPostsClearErrors());
     }
     if (message) {
-      alert.success(message);
+      toast.success(message);
       dispatch(ClearMessage());
     }
-  }, [dispatch, alert, message, followError,userError, myPostError]);
+  }, [dispatch, toast, message, followError, userError, myPostError]);
 
-
-
-
-
-  return loading || userLoading ? (
-    <Loader />
-  ) : (
+  return (
     <div className="account">
       <div className="accountleft">
         {posts && posts.length > 0 ? (
@@ -118,7 +102,7 @@ const UserProfile = () => {
               user={loginUser}
               isAccount={myProfile}
               isDelete={myProfile}
-              userProfile = {params.id}
+              userProfile={params.id}
             />
           ))
         ) : (
@@ -127,49 +111,58 @@ const UserProfile = () => {
           </Typography>
         )}
       </div>
-      <div className="accountright">
-      { user && 
-      (<>
-      <Avatar
-          src={user.avatar.url}
-          sx={{ height: "8vmax", width: "8vmax" }}
-        />
-        <Typography variant="h5">{user.name}</Typography>
-        <div>
-          <button onClick={() => {setFollowersToggle(!followersToggle);}}>
-            <Typography>Followers</Typography>
-          </button>
-          <Typography>{user.followers.length}</Typography>
+
+      {userLoading ? (
+        <Loader />
+      ) : (
+        <div className="accountright">
+          {user && (
+            <>
+              <Avatar
+                src={user.avatar.url}
+                sx={{ height: "8vmax", width: "8vmax" }}
+              />
+              <Typography variant="h5">{user.name}</Typography>
+              <div>
+                <button
+                  onClick={() => {
+                    setFollowersToggle(!followersToggle);
+                  }}
+                >
+                  <Typography>Followers</Typography>
+                </button>
+                <Typography>{user.followers.length}</Typography>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    setFollowingToggle(!followingToggle);
+                  }}
+                >
+                  <Typography>Following</Typography>
+                </button>
+                <Typography>{user.following.length}</Typography>
+              </div>
+              <div>
+                <Typography>Posts</Typography>
+                <Typography>{user.posts.length}</Typography>
+              </div>
+            </>
+          )}
+
+          {!myProfile && (
+            <Button
+              variant="contained"
+              onClick={followHandler}
+              style={{ backgroundColor: following ? "red" : "blue" }}
+              disabled={followLoading}
+            >
+              {following ? "Unfollow" : "Follow"}
+            </Button>
+          )}
         </div>
-        <div>
-          <button onClick={() => {setFollowingToggle(!followingToggle)}}>
-            <Typography>Following</Typography>
-          </button>
-          <Typography>{user.following.length}</Typography>
-        </div>
-        <div>
-          <Typography>Posts</Typography>
-          <Typography>{user.posts.length}</Typography>
-        </div>
-        </>)}
-
-        {
-        !myProfile && 
-        <Button variant="contained" 
-        onClick={followHandler}
-        style={{backgroundColor:following?"red":"blue"}}
-        disabled={followLoading}
-        >
-            {following?"Unfollow":
-            "Follow"}
-        </Button>
-        }
-
-
-
-
-
-
+      )}
+      <div>
         <Dialog
           open={followersToggle}
           onClose={() => {
@@ -178,20 +171,24 @@ const UserProfile = () => {
         >
           <div className="DialogBox">
             <Typography variant="h4">Followers</Typography>
-            {user && user.followers.length>0?user.followers.map((follower) => {
-              return (
-                <User
-                  key={follower._id}
-                  userId={follower._id}
-                  name={follower.name}
-                  avatar={follower.avatar.url}
-                />
-              );
-            }):<Typography style={{margin:"2vmax"}}>No Followers Yet</Typography>}
+            {user && user.followers.length > 0 ? (
+              user.followers.map((follower) => {
+                return (
+                  <User
+                    key={follower._id}
+                    userId={follower._id}
+                    name={follower.name}
+                    avatar={follower.avatar.url}
+                  />
+                );
+              })
+            ) : (
+              <Typography style={{ margin: "2vmax" }}>
+                No Followers Yet
+              </Typography>
+            )}
           </div>
         </Dialog>
-
-
 
         <Dialog
           open={followingToggle}
@@ -201,23 +198,28 @@ const UserProfile = () => {
         >
           <div className="DialogBox">
             <Typography variant="h4">Following</Typography>
-            {user && user.following.length>0?user.following.map((follow) => {
-              return (
-                <User
-                  key={follow._id}
-                  userId={follow._id}
-                  name={follow.name}
-                  avatar={follow.avatar.url}
-                />
-              );
-            }):<Typography style={{margin:"2vmax"}}>Not following anyone yet.</Typography>}
+            {user && user.following.length > 0 ? (
+              user.following.map((follow) => {
+                return (
+                  <User
+                    key={follow._id}
+                    userId={follow._id}
+                    name={follow.name}
+                    avatar={follow.avatar.url}
+                  />
+                );
+              })
+            ) : (
+              <Typography style={{ margin: "2vmax" }}>
+                Not following anyone yet.
+              </Typography>
+            )}
           </div>
         </Dialog>
       </div>
+      <ToastContainer />
     </div>
   );
 };
 
-
-
-export default UserProfile
+export default UserProfile;
