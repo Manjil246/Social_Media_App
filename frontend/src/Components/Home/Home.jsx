@@ -27,8 +27,10 @@ const Home = () => {
     const {loading, posts, error:postError} = useSelector(state=>state.postsOfFollowing)
 
     useEffect(() => {
-      dispatch(loadUser())
-      //eslint-disable-next-line
+      const load = async ()=>{
+        await dispatch(loadUser())
+      }
+      load();
     },[])
     
 
