@@ -12,7 +12,7 @@ export const getMyPosts = ()=> async (dispatch)=>{
 
         dispatch(MyPostsRequest());
 
-        const {data} = await axios.get("https://social-media-app-backend-gamma.vercel.app/post/my/posts");
+        const {data} = await axios.get("https://social-media-app-backend-three.vercel.app/post/my/posts");
 
         dispatch(MyPostsSuccess(data.posts))
 

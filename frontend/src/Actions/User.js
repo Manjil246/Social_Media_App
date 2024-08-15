@@ -29,7 +29,7 @@ export const loginUser =  (email,password)=>
             dispatch(LoginRequest())
 
             const {data} = await axios.post(
-                "https://social-media-app-backend-gamma.vercel.app/user/login",
+                "https://social-media-app-backend-three.vercel.app/user/login",
                 {email,password},
                 {
                     headers:{
@@ -48,7 +48,7 @@ export const loadUser = ()=>async (dispatch)=>{
     try { 
         dispatch(LoadUserRequest())
 
-        const {data} = await axios.get("https://social-media-app-backend-gamma.vercel.app/user/myprofile");
+        const {data} = await axios.get("https://social-media-app-backend-three.vercel.app/user/myprofile");
 
         dispatch(LoadUserSuccess(data.user))
         
@@ -63,7 +63,7 @@ export const logoutUser =  ()=>
         try {
             dispatch(LogoutUserRequest())
 
-            const {data} = await axios.get("https://social-media-app-backend-gamma.vercel.app/user/logout")
+            const {data} = await axios.get("https://social-media-app-backend-three.vercel.app/user/logout")
 
             dispatch(LogoutUserSuccess(data.message))
         } catch (error) {   
@@ -76,7 +76,7 @@ export const registerUser = (name,email,password,avatar)=>async (dispatch)=>{
     try {
         dispatch(RegisterRequest());
 
-        const {data} = await axios.post(`https://social-media-app-backend-gamma.vercel.app/user/createuser`,
+        const {data} = await axios.post(`https://social-media-app-backend-three.vercel.app/user/createuser`,
             {name,email,password,avatar},
             {
                 headers:{
@@ -98,7 +98,7 @@ export const updateUser = (name,email,avatar)=>async (dispatch)=>{
     try {
         dispatch(UpdateUserRequest());
 
-        const {data} = await axios.put(`https://social-media-app-backend-gamma.vercel.app/user/updateprofile`,
+        const {data} = await axios.put(`https://social-media-app-backend-three.vercel.app/user/updateprofile`,
             {name,email,avatar},
             {
                 headers:{
@@ -120,7 +120,7 @@ export const deleteMyProfile = ()=>async (dispatch)=>{
     try {
         dispatch(DeleteProfileRequest());
 
-        const {data} = await axios.delete(`https://social-media-app-backend-gamma.vercel.app/user/deleteuser`)
+        const {data} = await axios.delete(`https://social-media-app-backend-three.vercel.app/user/deleteuser`)
         
         dispatch(DeleteProfileSuccess(data.message))  
         
