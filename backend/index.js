@@ -8,20 +8,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import cloudinary from "cloudinary"
 
-
-
-import cors from "cors"
-app.use(cors());
-app.options('*',cors());
-var allowCrossDomain = function(req,res,next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();  
-}
-app.use(allowCrossDomain);
-
-
+ 
 
 cloudinary.config({
     cloud_name : process.env.CLOUDINARY_NAME,
@@ -29,7 +16,16 @@ cloudinary.config({
     api_secret : process.env.CLOUDINARY_API_SECRET
 })
 
-
+import cors from "cors"
+app.use(cors());
+// app.options('*',cors());
+// var allowCrossDomain = function(req,res,next) {
+    //   res.header('Access-Control-Allow-Origin', '*');
+    //   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    //   res.header('Access-Control-Allow-Headers', 'Content-Type');
+    //   next();  
+    // }
+// app.use(allowCrossDomain);
 
 
 app.use(express.json({limit:'50mb'}))
@@ -53,5 +49,4 @@ app.use("/post",post)
 app.listen(port,()=>{
     console.log(`Social media app running at http://localhost:${port}`)
 })
-
 

@@ -9,7 +9,7 @@ export const getAllUsers = (name="")=>async (dispatch)=>{
     try {
         dispatch(AllUsersRequest());
 
-        const {data} = await axios.get(`https://social-media-app-backend-xp9n.onrender.com/user/getallusers?name=${name}`);
+        const {data} = await axios.get(`/user/getallusers?name=${name}`);
 
         dispatch(AllUsersSuccess(data.users))
 

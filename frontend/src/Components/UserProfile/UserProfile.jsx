@@ -86,7 +86,7 @@ const UserProfile = () => {
   return (
     <div className="account">
       <div className="accountleft">
-        {posts && posts.length > 0 ? (
+        {user && posts && posts.length > 0 ? (
           posts.map((post) => (
             <Post
               key={post._id}

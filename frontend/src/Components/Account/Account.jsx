@@ -9,7 +9,7 @@ import { ClearErrors, ClearMessage } from "../../Reducers/Like";
 import { MyPostsClearErrors } from "../../Reducers/MyPosts";
 import { Link } from "react-router-dom";
 import User from "../User/User";
-import { deleteMyProfile, logoutUser } from "../../Actions/User";
+import { deleteMyProfile, loadUser, logoutUser } from "../../Actions/User";
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,6 +42,7 @@ const Account = () => {
 
   useEffect(() => {
     dispatch(getMyPosts());
+    dispatch(loadUser());
   }, [dispatch]);
 
   useEffect(() => {

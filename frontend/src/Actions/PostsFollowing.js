@@ -7,12 +7,14 @@ import {
 
 } from "../Reducers/PostsFollowing";
 
+
+
 export const getFollowingPosts = ()=> async (dispatch)=>{
     try {
 
         dispatch(PostOfFollowingRequest());
 
-        const {data} = await axios.get("https://social-media-app-backend-xp9n.onrender.com/post/posts");
+        const {data} = await axios.get("/post/posts");
 
         dispatch(PostOfFollowingSuccess(data.posts))
 

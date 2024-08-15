@@ -56,7 +56,7 @@ const userSlice = createSlice({
         },
         LoadUserFailure : (state,action)=>{
             state.loading=false;
-            state.user = action.payload;
+            state.error = action.payload;
             state.isAuthenticated = false;
         },
         LogoutUserRequest : (state)=>{
