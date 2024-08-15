@@ -69,7 +69,7 @@ router.post("/login",async (req,res)=>{
                 const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
                 res.status(200).cookie("token",token,{
                     expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true,
-                    sameSite: "Lax",
+                    sameSite: "none",
                     secure: true,
                     domain: "social-media-app-g7fd.vercel.app",
                 }).json({success:true,token,user})
@@ -86,7 +86,7 @@ router.get("/logout",fetchuser,async (req,res)=>{
         return res.status(200).cookie("token",null,{
             expires:new Date(Date.now()),
             httpOnly:true,
-            sameSite: "Lax",
+            sameSite: "none",
             secure: true,
             domain: "social-media-app-g7fd.vercel.app",
         }).json({success:true,message:"Logged out Successfully"})
