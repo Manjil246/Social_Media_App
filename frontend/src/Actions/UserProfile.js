@@ -5,14 +5,11 @@ import {
     UserProfileSuccess
  } from "../Reducers/UserProfile" 
 
-
-
-
 export const getUserProfile = (id)=> async (dispatch)=>{
     try {
         dispatch(UserProfileRequest());
 
-        const {data} = await axios.get(`/user/getuserprofile/${id}`);
+        const {data} = await axios.get(`https://social-media-app-backend-gamma.vercel.app/user/getuserprofile/${id}`);
 
         dispatch(UserProfileSuccess(data.user))
 

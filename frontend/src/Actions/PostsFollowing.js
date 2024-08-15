@@ -14,7 +14,7 @@ export const getFollowingPosts = ()=> async (dispatch)=>{
 
         dispatch(PostOfFollowingRequest());
 
-        const {data} = await axios.get("/post/posts");
+        const {data} = await axios.get("https://social-media-app-backend-gamma.vercel.app/post/posts");
 
         dispatch(PostOfFollowingSuccess(data.posts))
 

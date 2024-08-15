@@ -8,8 +8,6 @@ import dotenv from "dotenv"
 dotenv.config();
 import cloudinary from "cloudinary"
 
- 
-
 cloudinary.config({
     cloud_name : process.env.CLOUDINARY_NAME,
     api_key : process.env.CLOUDINARY_API_KEY,
@@ -18,14 +16,14 @@ cloudinary.config({
 
 import cors from "cors"
 app.use(cors());
-// app.options('*',cors());
-// var allowCrossDomain = function(req,res,next) {
-    //   res.header('Access-Control-Allow-Origin', '*');
-    //   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-    //   res.header('Access-Control-Allow-Headers', 'Content-Type');
-    //   next();  
-    // }
-// app.use(allowCrossDomain);
+app.options('*',cors());
+var allowCrossDomain = function(req,res,next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();  
+}
+app.use(allowCrossDomain);
 
 
 app.use(express.json({limit:'50mb'}))

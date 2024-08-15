@@ -12,7 +12,7 @@ export const getUserPosts = (id)=> async (dispatch)=>{
 
         dispatch(UserPostsRequest());
 
-        const {data} = await axios.get(`/post/userposts/${id}`);
+        const {data} = await axios.get(`https://social-media-app-backend-gamma.vercel.app/post/userposts/${id}`);
 
         dispatch(UserPostsSuccess(data.posts))
 

@@ -36,7 +36,7 @@ export const likePost = (postId)=>async (dispatch)=>{
     try {
         dispatch(LikeRequest())
 
-        const {data} = await axios.get(`/post/likeandunlike/${postId}`);
+        const {data} = await axios.get(`https://social-media-app-backend-gamma.vercel.app/post/likeandunlike/${postId}`);
 
         dispatch(LikeSuccess(data.message))
     } catch (error) {
@@ -48,7 +48,7 @@ export const addCommentOnPost = (postId, comment)=>async (dispatch)=>{
     try {
         dispatch(AddCommentRequest());
 
-        const {data} = await axios.put(`/post/addupdatecomment/${postId}`,
+        const {data} = await axios.put(`https://social-media-app-backend-gamma.vercel.app/post/addupdatecomment/${postId}`,
             {comment},
             {
                 headers:{
@@ -70,7 +70,7 @@ export const deleteCommentOnPost = (postId, commentId)=>async (dispatch)=>{
     try {
         dispatch(DeleteCommentRequest());
 
-        const {data} = await axios.delete(`/post/deletecomment/${postId}`,
+        const {data} = await axios.delete(`https://social-media-app-backend-gamma.vercel.app/post/deletecomment/${postId}`,
             {
                 data:{commentId}
             }
@@ -89,7 +89,7 @@ export const createNewPost = (caption, image)=>async (dispatch)=>{
     try {
         dispatch(NewPostRequest());
 
-        const {data} = await axios.post(`/post/createpost`,
+        const {data} = await axios.post(`https://social-media-app-backend-gamma.vercel.app/post/createpost`,
             {caption,image},
             {
                 headers:{
@@ -113,7 +113,7 @@ export const updateCaptionOnPost = (caption, postId)=>async (dispatch)=>{
     try {
         dispatch(UpdateCaptionRequest());
 
-        const {data} = await axios.put(`/post/updatecaption/${postId}`,
+        const {data} = await axios.put(`https://social-media-app-backend-gamma.vercel.app/post/updatecaption/${postId}`,
             {caption},
             {
                 headers:{
@@ -136,7 +136,7 @@ export const deletePost = (postId)=>async (dispatch)=>{
     try {
         dispatch(DeletePostRequest());
 
-        const {data} = await axios.delete(`/post/deletepost/${postId}`); 
+        const {data} = await axios.delete(`https://social-media-app-backend-gamma.vercel.app/post/deletepost/${postId}`); 
         
         dispatch(DeletePostSuccess(data.message))  
         
@@ -150,7 +150,7 @@ export const updatePasswordUser = (oldPassword, newPassword)=>async (dispatch)=>
     try {
         dispatch(UpdatePasswordRequest());
 
-        const {data} = await axios.put(`/user/updatepassword`,
+        const {data} = await axios.put(`https://social-media-app-backend-gamma.vercel.app/user/updatepassword`,
             {oldPassword,newPassword},
             {
                 headers:{
@@ -171,7 +171,7 @@ export const forgotPassword = (email)=>async (dispatch)=>{
     try {
         dispatch(ForgotPasswordRequest());
 
-        const {data} = await axios.post(`/user/forgotpassword`,
+        const {data} = await axios.post(`https://social-media-app-backend-gamma.vercel.app/user/forgotpassword`,
             {email},
             {
                 headers:{
@@ -193,7 +193,7 @@ export const resetPassword = (password,token)=>async (dispatch)=>{
     try {
         dispatch(ForgotPasswordRequest());
 
-        const {data} = await axios.put(`/user/forgotpassword/reset/${token}`,
+        const {data} = await axios.put(`https://social-media-app-backend-gamma.vercel.app/user/forgotpassword/reset/${token}`,
             {password},
             {
                 headers:{
@@ -215,7 +215,7 @@ export const followUnfollowUser = (id)=>async (dispatch)=>{
     try {
         dispatch(FollowUserRequest());
 
-        const {data} = await axios.get(`/user/followuser/${id}`); 
+        const {data} = await axios.get(`https://social-media-app-backend-gamma.vercel.app/user/followuser/${id}`); 
         
         dispatch(FollowUserSuccess(data.message))  
         
