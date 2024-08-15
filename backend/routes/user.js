@@ -71,7 +71,7 @@ router.post("/login",async (req,res)=>{
                     expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true,
                     sameSite: "Lax",
                     secure: true,
-                    domain: "https://social-media-app-g7fd.vercel.app/",
+                    domain: ".social-media-app-g7fd.vercel.app/",
                 }).json({success:true,token,user})
             }
         }
@@ -88,7 +88,7 @@ router.get("/logout",fetchuser,async (req,res)=>{
             httpOnly:true,
             sameSite: "Lax",
             secure: true,
-            domain: "https://social-media-app-g7fd.vercel.app/",
+            domain: ".social-media-app-g7fd.vercel.app/",
         }).json({success:true,message:"Logged out Successfully"})
 
     } catch (error) {
