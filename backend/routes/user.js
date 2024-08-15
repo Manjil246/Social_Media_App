@@ -67,7 +67,12 @@ router.post("/login",async (req,res)=>{
             }
             else{
                 const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
-                res.status(200).cookie("token",token,{expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true}).json({success:true,token,user})
+                res.status(200).cookie("token",token,{
+                    expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true,
+                    sameSite: "Lax",
+                    secure: true,
+                    domain: "https://social-media-app-g7fd.vercel.app/",
+                }).json({success:true,token,user})
             }
         }
     } catch (error) {
@@ -78,7 +83,13 @@ router.post("/login",async (req,res)=>{
 router.get("/logout",fetchuser,async (req,res)=>{
     try {
         
-        return res.status(200).cookie("token",null,{expires:new Date(Date.now())}).json({success:true,message:"Logged out Successfully"})
+        return res.status(200).cookie("token",null,{
+            expires:new Date(Date.now()),
+            httpOnly:true,
+            sameSite: "Lax",
+            secure: true,
+            domain: "https://social-media-app-g7fd.vercel.app/",
+        }).json({success:true,message:"Logged out Successfully"})
 
     } catch (error) {
         res.status(500).json({success:true,message:error.message})
