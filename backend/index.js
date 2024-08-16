@@ -15,7 +15,10 @@ cloudinary.config({
 })
 
 import cors from "cors"
-app.use(cors());
+app.use(cors({
+  origin: "https://social-media-app-g7fd.vercel.app",
+  credentials: true,
+}));
 app.options('*',cors());
 var allowCrossDomain = function(req,res,next) {
   res.header('Access-Control-Allow-Origin', '*');

@@ -41,7 +41,14 @@ router.post("/createuser",async (req,res)=>{
             }})
             
             const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
-            res.status(200).cookie("token",token,{expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true}).json({success:true,token,message:"Registered and Logged In successfully",user})
+            res.status(200).cookie("token",token,{
+                expires:new Date(Date.now()+90*24*60*60*1000),
+                httpOnly: true,
+                sameSite: "none",
+                secure: true,
+                domain: "social-media-app-g7fd.vercel.app",
+                path: '/',
+            }).json({success:true,token,message:"Registered and Logged In successfully",user})
         }
 
 
@@ -67,12 +74,14 @@ router.post("/login",async (req,res)=>{
             }
             else{
                 const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
-                res.status(200).cookie("token",token,{
-                    expires:new Date(Date.now()+90*24*60*60*1000),httpOnly:true,
+                res.status(200).cookie("token", token, {
+                    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+                    httpOnly: true,
                     sameSite: "none",
                     secure: true,
                     domain: "social-media-app-g7fd.vercel.app",
-                }).json({success:true,token,user})
+                    path: '/',
+                }).json({ success: true, token, user });
             }
         }
     } catch (error) {
@@ -85,10 +94,11 @@ router.get("/logout",fetchuser,async (req,res)=>{
         
         return res.status(200).cookie("token",null,{
             expires:new Date(Date.now()),
-            httpOnly:true,
+            httpOnly: true,
             sameSite: "none",
             secure: true,
             domain: "social-media-app-g7fd.vercel.app",
+            path: '/',
         }).json({success:true,message:"Logged out Successfully"})
 
     } catch (error) {
