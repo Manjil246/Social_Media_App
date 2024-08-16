@@ -75,13 +75,14 @@ router.post("/login",async (req,res)=>{
             else{
                 const token = jwt.sign({_id:user._id},process.env.JWT_SECRET)
                 res.status(200).cookie("token", token, {
-                    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+                    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days
                     httpOnly: true,
-                    sameSite: "none",
-                    secure: true,
-                    domain: ".social-media-app-g7fd.vercel.app",
+                    sameSite: "none", // Allows cross-site requests
+                    secure: true, // Requires HTTPS
+                    domain: ".social-media-app-g7fd.vercel.app", // Frontend domain
                     path: '/',
                 }).json({ success: true, token, user });
+                
             }
         }
     } catch (error) {

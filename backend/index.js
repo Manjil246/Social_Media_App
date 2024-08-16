@@ -21,6 +21,7 @@ app.use(cors({
   origin: "https://social-media-app-g7fd.vercel.app",
   credentials: true,
 }));
+
 app.options('*',cors());
 
 
