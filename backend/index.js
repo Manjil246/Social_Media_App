@@ -18,7 +18,7 @@ app.set("trust proxy", 1);
 
 import cors from "cors"
 app.use(cors({
-  origin: "https://social-media-app-g7fd.vercel.app",
+  origin: "social-media-app-g7fd.vercel.app",
   credentials: true,
 }));
 
