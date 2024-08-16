@@ -79,7 +79,7 @@ router.post("/login",async (req,res)=>{
                     httpOnly: true,
                     sameSite: "none",
                     secure: true,
-                    domain: "social-media-app-g7fd.vercel.app",
+                    domain: ".social-media-app-g7fd.vercel.app",
                     path: '/',
                 }).json({ success: true, token, user });
             }
