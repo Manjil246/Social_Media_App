@@ -1,17 +1,18 @@
-import jwt from "jsonwebtoken"
-import User from "../models/User.js"
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-const fetchuser = async (req,res,next)=>{
+const fetchuser = async (req, res, next) => {
+  const { token } = req.cookies || req.body || req.params || req.query;
 
-    const {token} = req.cookies;
+  if (!token) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please login first" });
+  }
+  const data = jwt.verify(token, process.env.JWT_SECRET);
+  req.user = await User.findById(data._id);
 
-    if(!token){
-        return res.status(400).json({success:false,message:"Please login first"})
-    }
-    const data = jwt.verify(token,process.env.JWT_SECRET);
-    req.user = await User.findById(data._id);
-
-    next();
-}
+  next();
+};
 
 export default fetchuser;

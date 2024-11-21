@@ -27,7 +27,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       "https://social-media-app-backend-three.vercel.app/user/login",
-      { email, password },
+      { email, password, token: Cookies.get("token") },
       {
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,14 @@ export const logoutUser = () => async (dispatch) => {
     dispatch(LogoutUserRequest());
 
     const { data } = await axios.get(
-      "https://social-media-app-backend-three.vercel.app/user/logout"
+      "https://social-media-app-backend-three.vercel.app/user/logout",
+      { token: Cookies.get("token") },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
     );
 
     Cookies.set("token", null);
@@ -80,7 +87,7 @@ export const registerUser =
 
       const { data } = await axios.post(
         `https://social-media-app-backend-three.vercel.app/user/createuser`,
-        { name, email, password, avatar },
+        { name, email, password, avatar, token: Cookies.get("token") },
         {
           headers: {
             "Content-Type": "application/json",
