@@ -49,7 +49,7 @@ export const loadUser = ()=>async (dispatch)=>{
     try { 
         dispatch(LoadUserRequest())
 
-        const {data} = await axios.get("https://social-media-app-backend-manjil246s-projects.vercel.app/user/myprofile");
+        const {data} = await axios.get("https://social-media-app-backend-three.vercel.app/user/myprofile");
 
         dispatch(LoadUserSuccess(data.user))
         
