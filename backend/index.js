@@ -17,10 +17,12 @@ cloudinary.config({
 app.set("trust proxy", 1);
 
 import cors from "cors"
-app.use(cors({
-  origin: "https://social-media-app-g7fd.vercel.app",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "social-media-app-g7fd.vercel.app",
+    credentials: true,
+  })
+);
 
 app.options('*',cors());
 
