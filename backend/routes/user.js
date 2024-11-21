@@ -43,7 +43,7 @@ router.post("/createuser", async (req, res) => {
           httpOnly: true,
           sameSite: "none",
           secure: true,
-          domain: "https://social-media-app-g7fd.vercel.app",
+          domain: "social-media-app-g7fd.vercel.app",
           path: "/",
         })
         .json({
@@ -67,15 +67,11 @@ router.post("/login", async (req, res) => {
       .populate("posts followers following");
 
     if (!user) {
-      return res
-        .status(500)
-        .json({ success: false, message: "User doesnt exist" });
+      res.status(500).json({ success: false, message: "User doesnt exist" });
     } else {
       const passwordCompare = await bcryptjs.compare(password, user.password);
       if (!passwordCompare) {
-        return res
-          .status(500)
-          .json({ success: false, message: "Incorrect Password" });
+        res.status(500).json({ success: false, message: "Incorrect Password" });
       } else {
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         res
@@ -85,7 +81,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: "https://social-media-app-g7fd.vercel.app",
+            domain: "social-media-app-g7fd.vercel.app",
             path: "/",
           })
           .json({ success: true, token, user });
@@ -105,7 +101,7 @@ router.get("/logout", fetchuser, async (req, res) => {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-        domain: "https://social-media-app-g7fd.vercel.app",
+        domain: "social-media-app-g7fd.vercel.app",
         path: "/",
       })
       .json({ success: true, message: "Logged out Successfully" });
