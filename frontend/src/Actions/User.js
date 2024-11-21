@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosUser from "../auth/user";
 import {
   LoginRequest,
   LoginSuccess,
@@ -19,16 +19,14 @@ import {
   DeleteProfileFailure,
   DeleteProfileRequest,
 } from "../Reducers/User";
-import Cookies from "js-cookie";
 
 export const loginUser = (email, password) => async (dispatch) => {
   try {
     dispatch(LoginRequest());
 
-    const { data } = await axios.post(
-      "https://social-media-app-backend-three.vercel.app/user/login?token=" +
-        Cookies.get("token"),
-      { email, password, token: Cookies.get("token") },
+    const { data } = await axiosUser.post(
+      "/user/login",
+      { email, password },
       {
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +34,6 @@ export const loginUser = (email, password) => async (dispatch) => {
         withCredentials: true,
       }
     );
-    Cookies.set("token", data.token);
 
     dispatch(LoginSuccess(data));
   } catch (error) {
@@ -48,9 +45,8 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch(LoadUserRequest());
 
-    const { data } = await axios.get(
-      "https://social-media-app-backend-three.vercel.app/user/myprofile?token=" +
-        Cookies.get("token")
+    const { data } = await axiosUser.get(
+      "/user/myprofile"
     );
 
     dispatch(LoadUserSuccess(data.user));
@@ -63,9 +59,8 @@ export const logoutUser = () => async (dispatch) => {
   try {
     dispatch(LogoutUserRequest());
 
-    const { data } = await axios.get(
-      "https://social-media-app-backend-three.vercel.app/user/logout?token=" +Cookies.get("token"),
-      { token: Cookies.get("token") },
+    const { data } = await axiosUser.get(
+      "/user/logout",
       {
         headers: {
           "Content-Type": "application/json",
@@ -73,8 +68,6 @@ export const logoutUser = () => async (dispatch) => {
         withCredentials: true,
       }
     );
-
-    Cookies.set("token", null);
 
     dispatch(LogoutUserSuccess(data.message));
   } catch (error) {
@@ -87,18 +80,15 @@ export const registerUser =
     try {
       dispatch(RegisterRequest());
 
-      const { data } = await axios.post(
-        `https://social-media-app-backend-three.vercel.app/user/createuser?token=${Cookies.get(
-          "token"
-        )}`,
-        { name, email, password, avatar, token: Cookies.get("token") },
+      const { data } = await axiosUser.post(
+        `/user/createuser`,
+        { name, email, password, avatar },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      Cookies.set("token", data.token);
 
       dispatch(RegisterSuccess(data));
     } catch (error) {
@@ -110,10 +100,8 @@ export const updateUser = (name, email, avatar) => async (dispatch) => {
   try {
     dispatch(UpdateUserRequest());
 
-    const { data } = await axios.put(
-      `https://social-media-app-backend-three.vercel.app/user/updateprofile?token=${Cookies.get(
-        "token"
-      )}`,
+    const { data } = await axiosUser.put(
+      `/user/updateprofile`,
       { name, email, avatar },
       {
         headers: {
@@ -132,10 +120,8 @@ export const deleteMyProfile = () => async (dispatch) => {
   try {
     dispatch(DeleteProfileRequest());
 
-    const { data } = await axios.delete(
-      `https://social-media-app-backend-three.vercel.app/user/deleteuser?token=${Cookies.get(
-        "token"
-      )}`
+    const { data } = await axiosUser.delete(
+      `/user/deleteuser`
     );
 
     dispatch(DeleteProfileSuccess(data.message));

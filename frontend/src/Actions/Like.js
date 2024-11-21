@@ -1,4 +1,3 @@
-import axios from "axios";
 
 import {
   LikeRequest,
@@ -29,14 +28,13 @@ import {
   FollowUserRequest,
   FollowUserSuccess,
 } from "../Reducers/Like";
-import Cookies from "js-cookie";
+import axiosUser from "../auth/user";
 export const likePost = (postId) => async (dispatch) => {
   try {
     dispatch(LikeRequest());
 
-    const { data } = await axios.get(
-      `https://social-media-app-backend-three.vercel.app/post/likeandunlike/${postId}?token=${Cookies.get(
-        "token"
+    const { data } = await axiosUser.get(
+      `/post/likeandunlike/${postId}
       )}`
     );
 
@@ -50,8 +48,8 @@ export const addCommentOnPost = (postId, comment) => async (dispatch) => {
   try {
     dispatch(AddCommentRequest());
 
-    const { data } = await axios.put(
-      `https://social-media-app-backend-three.vercel.app/post/addupdatecomment/${postId}`,
+    const { data } = await axiosUser.put(
+      `/post/addupdatecomment/${postId}`,
       { comment },
       {
         headers: {
@@ -70,8 +68,8 @@ export const deleteCommentOnPost = (postId, commentId) => async (dispatch) => {
   try {
     dispatch(DeleteCommentRequest());
 
-    const { data } = await axios.delete(
-      `https://social-media-app-backend-three.vercel.app/post/deletecomment/${postId}`,
+    const { data } = await axiosUser.delete(
+      `/post/deletecomment/${postId}`,
       {
         data: { commentId },
       }
@@ -87,8 +85,8 @@ export const createNewPost = (caption, image) => async (dispatch) => {
   try {
     dispatch(NewPostRequest());
 
-    const { data } = await axios.post(
-      `https://social-media-app-backend-three.vercel.app/post/createpost`,
+    const { data } = await axiosUser.post(
+      `/post/createpost`,
       { caption, image },
       {
         headers: {
@@ -107,8 +105,8 @@ export const updateCaptionOnPost = (caption, postId) => async (dispatch) => {
   try {
     dispatch(UpdateCaptionRequest());
 
-    const { data } = await axios.put(
-      `https://social-media-app-backend-three.vercel.app/post/updatecaption/${postId}`,
+    const { data } = await axiosUser.put(
+      `/post/updatecaption/${postId}`,
       { caption },
       {
         headers: {
@@ -127,8 +125,8 @@ export const deletePost = (postId) => async (dispatch) => {
   try {
     dispatch(DeletePostRequest());
 
-    const { data } = await axios.delete(
-      `https://social-media-app-backend-three.vercel.app/post/deletepost/${postId}`
+    const { data } = await axiosUser.delete(
+      `/post/deletepost/${postId}`
     );
 
     dispatch(DeletePostSuccess(data.message));
@@ -142,8 +140,8 @@ export const updatePasswordUser =
     try {
       dispatch(UpdatePasswordRequest());
 
-      const { data } = await axios.put(
-        `https://social-media-app-backend-three.vercel.app/user/updatepassword`,
+      const { data } = await axiosUser.put(
+        `/user/updatepassword`,
         { oldPassword, newPassword },
         {
           headers: {
@@ -162,8 +160,8 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch(ForgotPasswordRequest());
 
-    const { data } = await axios.post(
-      `https://social-media-app-backend-three.vercel.app/user/forgotpassword`,
+    const { data } = await axiosUser.post(
+      `/user/forgotpassword`,
       { email },
       {
         headers: {
@@ -182,8 +180,8 @@ export const resetPassword = (password, token) => async (dispatch) => {
   try {
     dispatch(ForgotPasswordRequest());
 
-    const { data } = await axios.put(
-      `https://social-media-app-backend-three.vercel.app/user/forgotpassword/reset/${token}`,
+    const { data } = await axiosUser.put(
+      `/user/forgotpassword/reset/${token}`,
       { password },
       {
         headers: {
@@ -202,8 +200,8 @@ export const followUnfollowUser = (id) => async (dispatch) => {
   try {
     dispatch(FollowUserRequest());
 
-    const { data } = await axios.get(
-      `https://social-media-app-backend-three.vercel.app/user/followuser/${id}`
+    const { data } = await axiosUser.get(
+      `/user/followuser/${id}`
     );
 
     dispatch(FollowUserSuccess(data.message));

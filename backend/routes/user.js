@@ -39,12 +39,10 @@ router.post("/createuser", async (req, res) => {
       res
         .status(200)
         .cookie("token", token, {
-          expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+          maxAge: 90 * 24 * 60 * 60 * 1000,
           httpOnly: true,
           sameSite: "none",
           secure: true,
-          domain: "social-media-app-g7fd.vercel.app",
-          path: "/",
         })
         .json({
           success: true,
@@ -77,12 +75,10 @@ router.post("/login", async (req, res) => {
         res
           .status(200)
           .cookie("token", token, {
-            expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+            maxAge: 90 * 24 * 60 * 60 * 1000,
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: "social-media-app-g7fd.vercel.app",
-            path: "/",
           })
           .json({ success: true, token, user });
       }
@@ -286,8 +282,10 @@ router.delete("/deleteuser", fetchuser, async (req, res) => {
 
     await User.findByIdAndDelete(user._id);
     res.cookie("token", null, {
-      expires: new Date(Date.now()),
+      maxAge: 0,
       httpOnly: true,
+      sameSite: "none",
+      secure: true,
     });
 
     //Remove posts of user

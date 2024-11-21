@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosUser from "../auth/user";
 import { 
     UserPostsRequest,
     UserPostsFailure,
@@ -13,7 +13,7 @@ export const getUserPosts = (id)=> async (dispatch)=>{
 
         dispatch(UserPostsRequest());
 
-        const {data} = await axios.get(`https://social-media-app-backend-three.vercel.app/post/userposts/${id}?token=${Cookies.get("token")}`);
+        const {data} = await axiosUser.get(`/post/userposts`);
 
         dispatch(UserPostsSuccess(data.posts))
 
