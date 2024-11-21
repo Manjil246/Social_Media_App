@@ -4,6 +4,7 @@ import {
     UserPostsFailure,
     UserPostsSuccess
  } from "../Reducers/UserPosts" 
+ import Cookies from "js-cookie";
 
 
 
@@ -12,7 +13,7 @@ export const getUserPosts = (id)=> async (dispatch)=>{
 
         dispatch(UserPostsRequest());
 
-        const {data} = await axios.get(`https://social-media-app-backend-three.vercel.app/post/userposts/${id}`);
+        const {data} = await axios.get(`https://social-media-app-backend-three.vercel.app/post/userposts/${id}?token=${Cookies.get("token")}`);
 
         dispatch(UserPostsSuccess(data.posts))
 
