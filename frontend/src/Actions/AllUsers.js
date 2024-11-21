@@ -11,7 +11,7 @@ export const getAllUsers =
     try {
       dispatch(AllUsersRequest());
 
-      const { data } = await axiosUser.get(`/user/getallusers?name=${name}?`);
+      const { data } = await axiosUser.get(`/user/getallusers?name=${name}`);
 
       dispatch(AllUsersSuccess(data.users));
     } catch (error) {
